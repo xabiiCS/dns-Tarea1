@@ -10,9 +10,15 @@ options {
 	// Uncomment the following block, and insert the addresses replacing 
 	// the all-0's placeholder.
 
+<<<<<<< HEAD
 	forwarders {
 		8.8.8.8;
 	};
+=======
+	// forwarders {
+	//	8.8.8.8;
+	// };
+>>>>>>> c5bed99a188abb716d64f525127af6713f810c19
 
 	//========================================================================
 	// If BIND logs error messages about the root key being expired,
