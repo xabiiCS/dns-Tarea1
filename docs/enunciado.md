@@ -61,6 +61,3 @@ Es posible que necesites instalar el paquete `dnsutils`.
      nslookup -q=txt lenda.starwars.lan localhost
      nslookup 192.168.20.11 localhost
      ```
-
-### Entrega
-Pega en esta tarea el enlace a tu repositorio de GitHub.
