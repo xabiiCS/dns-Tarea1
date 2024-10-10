@@ -7,7 +7,8 @@ services:
           ipv4_address: 192.168.20.10
     volumes:
       - ./dnsserver/conf/named.conf.options:/etc/bind/named.conf.options
-  eq1:
+      - ./dnsserver/conf/named.db.starwars.lan:/etc/bind/db.starwars.lan  
+  client1:  
     build: debian
     hostname: eq1
     networks:
@@ -18,4 +19,3 @@ networks:
     ipam:
       config:
         - subnet: 192.168.20.0/24
-
