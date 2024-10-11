@@ -1,29 +1,32 @@
-$TTL 86400                ; Tiempo de vida en segundos
+$TTL 86400
 @   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
-        2023101001 ; Número de serie (cambia este número cuando hagas cambios)
-        604800      ; Refresh (intervalo de actualización)
-        86400       ; Retry (intervalo de reintento)
-        2419200     ; Expire (tiempo antes de que la zona expire)
-        604800 )     ; Minimum TTL (TTL mínimo para los registros de la zona)
+     2023101001 ; Serial
+     604800      ; Refresh
+     86400       ; Retry
+     2419200     ; Expire
+     604800 )    ; Minimum TTL
 
-; Servidores de nombres para la zona
-@   IN  NS  darthsidious.starwars.lan.
+@   IN  NS  darthvader.starwars.lan.
+@   IN  NS  darthsidious.starwars.lan.   
 
-; Hosts Tipo A
+; Registros A
 darthvader   IN  A    192.168.20.10
-skywalker     IN  A    192.168.20.101
-skywalker     IN  A    192.168.20.111
+skywalker    IN  A    192.168.20.101
+skywalker    IN  A    192.168.20.111
 luke         IN  A    192.168.20.22
 darthsidious IN  A    192.168.20.11
 yoda         IN  A    192.168.20.24
 yoda         IN  A    192.168.20.25
 c3p0         IN  A    192.168.20.26
 
-; Hosts tipo CNAME 
+
+; Registro TXT
+lenda        IN  TXT  "Que a forza te acompanhe"
+
+; Registro CNAME
 palpatine    IN  CNAME darthsidious.starwars.lan.
 
-; Hosts tipo MX 
+; Registro MX
 @            IN  MX   10 c3p0.starwars.lan.
 
-; Hosts tipo TXT (información adicional)
-lenda        IN  TXT  "Que a forza te acompanhe"
+

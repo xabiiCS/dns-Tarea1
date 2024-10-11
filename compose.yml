@@ -6,8 +6,10 @@ services:
       rededns:
           ipv4_address: 192.168.20.10
     volumes:
+      - ./dnsserver/conf/db.local:/etc/bind/db.local
+      - ./dnsserver/conf/db.starwars.lan:/etc/bind/db.starwars.lan
+      - ./dnsserver/conf/named.conf.local:/etc/bind/named.conf.local
       - ./dnsserver/conf/named.conf.options:/etc/bind/named.conf.options
-      - ./dnsserver/conf/named.db.starwars.lan:/etc/bind/db.starwars.lan  
   client1:  
     build: debian
     hostname: eq1

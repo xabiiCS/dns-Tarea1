@@ -145,48 +145,48 @@ www.mecd.gob.es.	21600	IN	A	212.128.114.116
 ;; SERVER: 127.0.0.1#53(localhost) (UDP)
 ;; WHEN: Thu Oct 10 11:03:32 UTC 2024
 ;; MSG SIZE  rcvd: 88
-
 ```
 
 ### 3. Creación de una zona primaria de resolución directa
 
 #### Contenido del archivo de zona:
 ```
-$TTL 86400                ; Tiempo de vida en segundos
+$TTL 86400
 @   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
-        2023101001 ; Número de serie (cambia este número cuando hagas cambios)
-        604800      ; Refresh (intervalo de actualización)
-        86400       ; Retry (intervalo de reintento)
-        2419200     ; Expire (tiempo antes de que la zona expire)
-        604800 )     ; Minimum TTL (TTL mínimo para los registros de la zona)
+     2023101001 ; Serial
+     604800      ; Refresh
+     86400       ; Retry
+     2419200     ; Expire
+     604800 )    ; Minimum TTL
 
-; Servidores de nombres para la zona
 @   IN  NS  darthsidious.starwars.lan.
 
-; Hosts Tipo A
+; Registros A
 darthvader   IN  A    192.168.20.10
-skywalker     IN  A    192.168.20.101
-skywalker     IN  A    192.168.20.111
+skywalker    IN  A    192.168.20.101
+skywalker    IN  A    192.168.20.111
 luke         IN  A    192.168.20.22
 darthsidious IN  A    192.168.20.11
 yoda         IN  A    192.168.20.24
 yoda         IN  A    192.168.20.25
 c3p0         IN  A    192.168.20.26
 
-; Hosts tipo CNAME 
+
+; Registro TXT
+lenda        IN  TXT  "Que a forza te acompanhe"
+
+; Registro CNAME
 palpatine    IN  CNAME darthsidious.starwars.lan.
 
-; Hosts tipo MX 
+; Registro MX
 @            IN  MX   10 c3p0.starwars.lan.
-
-; Hosts tipo TXT (información adicional)
-lenda        IN  TXT  "Que a forza te acompanhe"
 ```
 
 #### Contenido del archivo `/etc/bind/named.conf.local`:
 ```
 //
 // Do any local configuration here
+
 zone "starwars.lan" {
     type master;                 
     file "/etc/bind/db.starwars.lan"; 
@@ -203,12 +203,49 @@ zone "starwars.lan" {
 
 #### Contenido del archivo de zona:
 ```
-(Pega aquí el contenido del archivo de zona)
+$TTL 86400
+@   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
+        2023101001 ; Serial
+        604800      ; Refresh
+        86400       ; Retry
+        2419200     ; Expire
+        604800 )    ; Minimum TTL
+
+; Servidores de nombres para la zona
+@   IN  NS  darthsidious.starwars.lan.
+
+; Registros PTR
+10  IN  PTR darthvader.starwars.lan.
+101 IN  PTR skywalker.starwars.lan.
+111 IN  PTR skywalker.starwars.lan.
+22  IN  PTR luke.starwars.lan.
+11  IN  PTR darthsidious.starwars.lan.
+24  IN  PTR yoda.starwars.lan.
+25  IN  PTR yoda.starwars.lan.
+26  IN  PTR c3p0.starwars.lan.
 ```
 
 #### Contenido del archivo `/etc/bind/named.conf.local`:
 ```
-(Pega aquí el contenido del archivo)
+//
+// Do any local configuration here
+
+zone "starwars.lan" {
+    type master;                 
+    file "/etc/bind/db.starwars.lan"; 
+};
+
+zone "20.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.20";
+};
+
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
 ```
 
 ### 5. Comprobación de la resolución de registros

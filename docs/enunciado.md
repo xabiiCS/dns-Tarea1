@@ -14,10 +14,6 @@ El objetivo de esta tarea es instalar el servidor **DNS BIND9** en una máquina 
 Puedes usar contenedores con **Debian 12** y un único interfaz de red.
 
 ### Requisitos adicionales ✅
-<<<<<<< HEAD
-=======
-
->>>>>>> 90e7c7af4cfe59ee3618f68b1daac02b9ca5166d
 Es posible que necesites instalar el paquete `dnsutils`.
 
 ### Instrucciones
@@ -27,10 +23,6 @@ Es posible que necesites instalar el paquete `dnsutils`.
    - Comprobar que ya funciona como servidor DNS caché pegando en el documento de entrega la salida del siguiente comando:
 
      ```bash
-<<<<<<< HEAD
-=======
-
->>>>>>> 90e7c7af4cfe59ee3618f68b1daac02b9ca5166d
      dig @localhost www.edu.xunta.gal
      ```
 
@@ -43,7 +35,7 @@ Es posible que necesites instalar el paquete `dnsutils`.
      dig @localhost www.mecd.gob.es
      ```
 
-3. **Crear una zona primaria de resolución directa**
+3. **Crear una zona primaria de resolución directa** 
    - Instala una zona primaria de resolución directa llamada `starwars.lan` y añade los siguientes registros de recursos:
      - **Tipo A:**  
        - `darthvader` con IP `192.168.20.10`
