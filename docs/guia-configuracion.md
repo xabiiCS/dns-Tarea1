@@ -8,7 +8,9 @@ En este documento se detallan los pasos necesarios para la configuración de un 
 ## Requisitos Previos á tarea
 
 ### 1º Temos acceso a Internet?
+
 #### Comprobación con comando:
+
 ```
 root@darthvader:/# ping google.com.
 PING google.com (142.250.201.78) 56(84) bytes of data.
@@ -19,14 +21,20 @@ PING google.com (142.250.201.78) 56(84) bytes of data.
 2 packets transmitted, 2 received, 0% packet loss, time 1001ms
 rtt min/avg/max/mdev = 12.052/12.650/13.249/0.598 ms
 ```
+
 ### 2º O Nome do host DNS é ***dartvader***?
+
 #### Comprobación con comando:
+
 ```
 root@darthvader:/# hostname
 darthvader
 ```
+
 ### 3º A súa direccion IPv4 é 192.168.20.10/24?
+
 #### Comprobación con comando:
+
 ```
 root@darthvader:/# ip a | grep 192.168.20.1
     inet 192.168.20.10/24 brd 192.168.20.255 scope global eth0
