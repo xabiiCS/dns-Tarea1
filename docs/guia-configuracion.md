@@ -40,16 +40,19 @@ root@darthvader:/# ip a | grep 192.168.20.1
     inet 192.168.20.10/24 brd 192.168.20.255 scope global eth0
 ```
 ### 4º Instalar paquete dnsutils
-#### Comprobación con comando:
+#### Comprobación con comando e Imaxe da preinstalación co DockerFIle
+![DockerFile dns](/docs/img/dockerfilepre.png)
+
 ```
-root@darthvader:/# ip a | grep 192.168.20.1
-    inet 192.168.20.10/24 brd 192.168.20.255 scope global eth0
+root@darthvader:/# dpkg -l | grep dnsutils
+ii  bind9-dnsutils          1:9.18.28-1~deb12u2     amd64        Clients provided with BIND 9
+ii  dnsutils                1:9.18.28-1~deb12u2     all          Transitional package for bind9-dnsutils
 ```
-### Imaxe da preinstalación co DockerFIle
+<br>
 
 ### 5º Usar unha única interface de rede
-### Imaxe da preinstalación co DockerFIle
-![DockerFile dns](/docs/img/dockerfilepre.png)
+![DockerFile dns](/docs/img/compose.png)
+
 
 ## Respostas á Tarefa
 
@@ -89,39 +92,8 @@ www.edu.xunta.gal.	16913	IN	A	85.91.64.65
 ### 2. Configuración del reenviador
 
 #### Contenido del archivo `/etc/bind/named.conf.options`:
-```
-options {
-	directory "/var/cache/bind";
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
 
-	// If there is a firewall between you and nameservers you want
-	// to talk to, you may need to fix the firewall to allow multiple
-	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
-
-	// If your ISP provided one or more IP addresses for stable 
-	// nameservers, you probably want to use them as forwarders.  
-	// Uncomment the following block, and insert the addresses replacing 
-	// the all-0's placeholder.
-
-	forwarders {
-		8.8.8.8;
-	};
-
-	//========================================================================
-	// If BIND logs error messages about the root key being expired,
-	// you will need to update your keys.  See https://www.isc.org/bind-keys
-	//========================================================================
-	dnssec-validation no;
-
-	listen-on-v6 { none; };
-};
-```
-
-#### Comando ejecutado:
-```bash
-dig @localhost www.mecd.gob.es
-```
-
-#### Salida del comando:
 ```
 root@darthvader:/# dig @localhost www.mecd.gob.es
 
