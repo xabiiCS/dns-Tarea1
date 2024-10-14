@@ -13,13 +13,13 @@ O obxectivo desta tarefa é instalar o servidor **DNS BIND9** nunha máquina vir
 
 Podes usar contedores con **Debian 12** e unha única interface de rede.
 
-### Requisitos adicionais ✅
+### Requisitos adicionais 
 
 É posible que necesites instalar o paquete `dnsutils`.
 
 ### Instrucións
 
-1. **Instalar o servidor BIND9** ✅
+1. **Instalar o servidor BIND9** 
   - Instala o servidor **BIND9** no equipo `darthvader`.
   - Comprobar que xa funciona como servidor DNS caché pegando no documento de entrega a saída do seguinte comando:
 
