@@ -14,6 +14,7 @@ El objetivo de esta tarea es instalar el servidor **DNS BIND9** en una máquina 
 Puedes usar contenedores con **Debian 12** y un único interfaz de red.
 
 ### Requisitos adicionales ✅
+
 Es posible que necesites instalar el paquete `dnsutils`.
 
 ### Instrucciones
@@ -35,7 +36,7 @@ Es posible que necesites instalar el paquete `dnsutils`.
      dig @localhost www.mecd.gob.es
      ```
 
-3. **Crear una zona primaria de resolución directa** 
+3. **Crear una zona primaria de resolución directa**
    - Instala una zona primaria de resolución directa llamada `starwars.lan` y añade los siguientes registros de recursos:
      - **Tipo A:**  
        - `darthvader` con IP `192.168.20.10`
@@ -50,7 +51,7 @@ Es posible que necesites instalar el paquete `dnsutils`.
      - **Tipo NS:** `darthsidious`
    - Pega en el documento de entrega el contenido del archivo de zona y el archivo `/etc/bind/named.conf.local`.
 
-4. **Crear una zona de resolución inversa** 
+4. **Crear una zona de resolución inversa**
    - Crea una zona de resolución inversa correspondiente a la IP del equipo `darthvader` y añade registros **PTR** para los registros **A** del ejercicio anterior.
    - Pega en el documento de entrega el contenido del archivo de zona y el archivo `/etc/bind/named.conf.local`.
 
