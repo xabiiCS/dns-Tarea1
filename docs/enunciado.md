@@ -18,7 +18,7 @@ Es posible que necesites instalar el paquete `dnsutils`.
 
 ### Instrucciones
 
-1. **Instalar el servidor BIND9**✅
+1. **Instalar el servidor BIND9** ✅
    - Instala el servidor **BIND9** en el equipo `darthvader`.
    - Comprobar que ya funciona como servidor DNS caché pegando en el documento de entrega la salida del siguiente comando:
 
@@ -26,7 +26,7 @@ Es posible que necesites instalar el paquete `dnsutils`.
      dig @localhost www.edu.xunta.gal
      ```
 
-2. **Configurar un reenviador**✅
+2. **Configurar un reenviador** ✅
    - Configura el servidor **BIND9** para que use como reenviador el **DNS 8.8.8.8**.
    - Pega en el documento de entrega el contenido del archivo `/etc/bind/named.conf.options` y la salida del siguiente comando:
 
@@ -35,7 +35,7 @@ Es posible que necesites instalar el paquete `dnsutils`.
      dig @localhost www.mecd.gob.es
      ```
 
-3. **Crear una zona primaria de resolución directa** 
+3. **Crear una zona primaria de resolución directa** ✅
    - Instala una zona primaria de resolución directa llamada `starwars.lan` y añade los siguientes registros de recursos:
      - **Tipo A:**  
        - `darthvader` con IP `192.168.20.10`
@@ -50,7 +50,7 @@ Es posible que necesites instalar el paquete `dnsutils`.
      - **Tipo NS:** `darthsidious`
    - Pega en el documento de entrega el contenido del archivo de zona y el archivo `/etc/bind/named.conf.local`.
 
-4. **Crear una zona de resolución inversa**
+4. **Crear una zona de resolución inversa** ✅
    - Crea una zona de resolución inversa correspondiente a la IP del equipo `darthvader` y añade registros **PTR** para los registros **A** del ejercicio anterior.
    - Pega en el documento de entrega el contenido del archivo de zona y el archivo `/etc/bind/named.conf.local`.
 

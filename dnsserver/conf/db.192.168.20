@@ -1,6 +1,6 @@
 $TTL 86400
 @   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
-        2023101001 ; Serial
+        2023101002 ; Serial (actualízalo si has hecho cambios)
         604800      ; Refresh
         86400       ; Retry
         2419200     ; Expire
@@ -8,14 +8,14 @@ $TTL 86400
 
 ; Servidores de nombres para la zona
 @   IN  NS  darthvader.starwars.lan.
-@   IN  NS  darthsidious.starwars.lan.  
+@   IN  NS  darthsidious.starwars.lan.
 
 ; Registros PTR
-10  IN  PTR darthvader.starwars.lan.
-101 IN  PTR skywalker.starwars.lan.
-111 IN  PTR skywalker.starwars.lan.
-22  IN  PTR luke.starwars.lan.
-11  IN  PTR darthsidious.starwars.lan.
-24  IN  PTR yoda.starwars.lan.
-25  IN  PTR yoda.starwars.lan.
-26  IN  PTR c3p0.starwars.lan.
+10   IN  PTR darthvader.starwars.lan.
+101  IN  PTR skywalker.starwars.lan.
+111  IN  PTR skywalker.starwars.lan.
+22   IN  PTR luke.starwars.lan.
+11   IN  PTR darthsidious.starwars.lan.
+24   IN  PTR yoda.starwars.lan.
+25   IN  PTR yoda.starwars.lan.
+26   IN  PTR c3p0.starwars.lan.

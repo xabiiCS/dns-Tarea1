@@ -131,7 +131,8 @@ $TTL 86400
      2419200     ; Expire
      604800 )    ; Minimum TTL
 
-@   IN  NS  darthsidious.starwars.lan.
+@   IN  NS  darthvader.starwars.lan.
+@   IN  NS  darthsidious.starwars.lan.   
 
 ; Registros A
 darthvader   IN  A    192.168.20.10
@@ -224,10 +225,35 @@ zone "20.168.192.in-addr.arpa" {
 
 #### Comandos ejecutados y sus salidas:
 ```bash
-nslookup darthvader.starwars.lan localhost
+     nslookup darthvader.starwars.lan localhost
 ```
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+```bash
+     nslookup skywalker.starwars.lan localhost
 ```
-(Pega aquí la salida del comando)
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+```bash
+     nslookup starwars.lan localhost
 ```
-
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+```bash
+     nslookup -q=mx starwars.lan localhost
+```
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+```bash
+     nslookup -q=ns starwars.lan localhost
+```
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+```bash
+     nslookup -q=soa starwars.lan localhost
+```
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+```bash
+     nslookup -q=txt lenda.starwars.lan localhost
+```
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+```bash
+     nslookup 192.168.20.11 localhost
+```
+![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
 
