@@ -1,9 +1,8 @@
+# Introducción
 
-# Entrega
+Neste documento detállanse os pasos necesarios para a configuración dun servidor DNS utilizando BIND9. Ao longo desta guía, explicarase como instalar e configurar o servidor, así como a creación de zonas de resolución directa e inversa. Ademais, proporcionarase exemplos de comandos e as súas saídas para verificar o correcto funcionamento do servidor DNS. Este traballo forma parte da entrega 1 da asignatura de Sistemas e Redes de Información (SRI).
 
-## Introducción
-
-En este documento se detallan los pasos necesarios para la configuración de un servidor DNS utilizando BIND9. A lo largo de esta guía, se explicará cómo instalar y configurar el servidor, así como la creación de zonas de resolución directa e inversa. Además, se proporcionarán ejemplos de comandos y sus salidas para verificar el correcto funcionamiento del servidor DNS. Este trabajo es parte de la entrega 1 de la asignatura de Sistemas y Redes de Información (SRI).
+---
 
 ## Requisitos Previos á tarea
 
@@ -13,20 +12,26 @@ En este documento se detallan los pasos necesarios para la configuración de un 
 
 ![Acceso a Internet?](/docs/img/salidas/pre1.png)
 
+---
+
 ### 2º O Nome do host DNS é ***dartvader***?
 
 #### Comprobación con comando:
 
 ![HOSTNAME](/docs/img/salidas/pre2.png)
 
+</br>
+
 ### 3º A súa direccion IPv4 é 192.168.20.10/24?
 
 #### Comprobación con comando:
 
-![DockerFile dns](/docs/img/salidas/pre3.png)
+![Confirmar direccion IP](/docs/img/salidas/pre3.png)
+
+---
 
 ### 4º Instalar paquete dnsutils
-#### Comprobación con comando e Imaxe da preinstalación co DockerFIle
+#### Comprobación preinstalación dnsutils co DockerFIle e comando:
 
 ```bash
 FROM debian:12
@@ -44,12 +49,12 @@ ENTRYPOINT ["/entrypoint.sh"]
 ```
 
 
-![DockerFile dns](/docs/img/salidas/pre4.png)
+![DNSUTILS](/docs/img/salidas/pre4.png)
 
-
-<br>
+---
 
 ### 5º Usar unha única interface de rede
+#### Contido archivo compose:
 ```bash
 services:
   dnsserver:
@@ -76,23 +81,28 @@ networks:
       config:
         - subnet: 192.168.20.0/24
 ```
+---
 
+# Respostas á Tarefa
 
-## Respostas á Tarefa
+---
 
-### 1. Funciona o servidor BIND9
+### 1. Funciona o servidor BIND9?
 
 #### Comando executado para a proba:
 ```bash
 dig @localhost www.edu.xunta.gal
 ```
 
-#### Salida del comando:
-![DockerFile dns](/docs/img/salidas/ej1.png)
+#### Saída del comando:
+![Comando dig #1](/docs/img/salidas/ej1.png)
 
-### 2. Configuración del reenviador
+---
 
-#### Contenido del archivo `/etc/bind/named.conf.options`:
+### 2. Configuración do reenviador
+
+#### Contenido do arquivo `/etc/bind/named.conf.options`:
+
 ``` bash
 options {
 	directory "/var/cache/bind";
@@ -121,11 +131,14 @@ options {
 };
 ```
 
-![DockerFile dns](/docs/img/salidas/ej2.png)
+![Comando dig #2](/docs/img/salidas/ej2.png)
 
-### 3. Creación de una zona primaria de resolución directa
+---
 
-#### Contenido del archivo de zona:
+### 3. Creación dunha zoa primaria de resolución directa
+
+#### Contido do arquivo da zoa:
+
 ``` bash
 $TTL 86400
 @   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
@@ -159,7 +172,8 @@ palpatine    IN  CNAME darthsidious.starwars.lan.
 @            IN  MX   10 c3p0.starwars.lan.
 ```
 
-#### Contenido del archivo `/etc/bind/named.conf.local`:
+#### Contido do arquivo `/etc/bind/named.conf.local`:
+
 ``` bash
 //
 // Do any local configuration here
@@ -182,9 +196,12 @@ zone "20.168.192.in-addr.arpa" {
 //include "/etc/bind/zones.rfc1918";
 ```
 
-### 4. Creación de una zona de resolución inversa
+---
 
-#### Contenido del archivo de zona:
+### 4. Creación dunha zoa de resolución inversa
+
+#### Contido do arquivo da zoa:
+
 ``` bash
 $TTL 86400
 @   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
@@ -232,39 +249,71 @@ zone "20.168.192.in-addr.arpa" {
 //include "/etc/bind/zones.rfc1918";
 ```
 
-### 5. Comprobación de la resolución de registros
+---
 
-#### Comandos ejecutados y sus salidas:
+### 5. Comprobación da resolución de rexistros
+
+#### Comandos executados e as súas saídas:
+
 ```bash
-     nslookup darthvader.starwars.lan localhost
+nslookup darthvader.starwars.lan localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/5.1.png)
+
+---
+
 ```bash
-     nslookup skywalker.starwars.lan localhost
+nslookup skywalker.starwars.lan localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/EJ2222.png)
+
+---
+
 ```bash
      nslookup starwars.lan localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/5.3.png)
+
+---
+
 ```bash
      nslookup -q=mx starwars.lan localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/5.6.png)
+
+---
+
 ```bash
      nslookup -q=ns starwars.lan localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/5.5.png)
+
+---
+
 ```bash
      nslookup -q=soa starwars.lan localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/soa.png)
+
+---
+
 ```bash
      nslookup -q=txt lenda.starwars.lan localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/5.8.png)
+
+---
+
 ```bash
      nslookup 192.168.20.11 localhost
 ```
+
 ![DockerFile dns](/docs/img/salidas/last.png)
 
