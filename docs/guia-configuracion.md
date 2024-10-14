@@ -11,47 +11,71 @@ En este documento se detallan los pasos necesarios para la configuración de un 
 
 #### Comprobación con comando:
 
-```
-root@darthvader:/# ping google.com.
-PING google.com (142.250.201.78) 56(84) bytes of data.
-64 bytes from mad07s25-in-f14.1e100.net (142.250.201.78): icmp_seq=1 ttl=115 time=13.2 ms
-64 bytes from mad07s25-in-f14.1e100.net (142.250.201.78): icmp_seq=2 ttl=115 time=12.1 ms
-^C
---- google.com ping statistics ---
-2 packets transmitted, 2 received, 0% packet loss, time 1001ms
-rtt min/avg/max/mdev = 12.052/12.650/13.249/0.598 ms
-```
+![Acceso a Internet?](/docs/img/salidas/pre1.png)
 
 ### 2º O Nome do host DNS é ***dartvader***?
 
 #### Comprobación con comando:
 
-```
-root@darthvader:/# hostname
-darthvader
-```
+![HOSTNAME](/docs/img/salidas/pre2.png)
 
 ### 3º A súa direccion IPv4 é 192.168.20.10/24?
 
 #### Comprobación con comando:
 
-```
-root@darthvader:/# ip a | grep 192.168.20.1
-    inet 192.168.20.10/24 brd 192.168.20.255 scope global eth0
-```
+![DockerFile dns](/docs/img/salidas/pre3.png)
+
 ### 4º Instalar paquete dnsutils
 #### Comprobación con comando e Imaxe da preinstalación co DockerFIle
-![DockerFile dns](/docs/img/dockerfilepre.png)
 
+```bash
+FROM debian:12
+
+RUN apt update && apt install -y net-tools procps most iproute2  iputils-ping dnsutils
+
+RUN apt install -y bind9 dnsutils rsyslog
+
+RUN apt clean && rm -rf /var/lib/apt/lists/*
+
+COPY entrypoint.sh /entrypoint.sh
+
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
 ```
-root@darthvader:/# dpkg -l | grep dnsutils
-ii  bind9-dnsutils          1:9.18.28-1~deb12u2     amd64        Clients provided with BIND 9
-ii  dnsutils                1:9.18.28-1~deb12u2     all          Transitional package for bind9-dnsutils
-```
+
+
+![DockerFile dns](/docs/img/salidas/pre4.png)
+
+
 <br>
 
 ### 5º Usar unha única interface de rede
-![DockerFile dns](/docs/img/compose.png)
+```bash
+services:
+  dnsserver:
+    build: dnsserver
+    hostname: darthvader
+    networks:
+      rededns:
+          ipv4_address: 192.168.20.10
+    volumes:
+      - ./dnsserver/conf/db.192.168.20:/etc/bind/db.192.168.20
+      - ./dnsserver/conf/db.local:/etc/bind/db.local
+      - ./dnsserver/conf/db.starwars.lan:/etc/bind/db.starwars.lan
+      - ./dnsserver/conf/named.conf.local:/etc/bind/named.conf.local
+      - ./dnsserver/conf/named.conf.options:/etc/bind/named.conf.options
+  client1:  
+    build: debian
+    hostname: eq1
+    networks:
+      rededns:
+          ipv4_address: 192.168.20.100
+networks:
+  rededns:
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
+```
 
 
 ## Respostas á Tarefa
@@ -64,65 +88,45 @@ dig @localhost www.edu.xunta.gal
 ```
 
 #### Salida del comando:
-```
-root@darthvader:/# dig @localhost www.edu.xunta.gal
-
-; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> @localhost www.edu.xunta.gal
-; (2 servers found)
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 44367
-;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 1232
-; COOKIE: f087713a17d56d25010000006707b428bc743d91cf4f84c0 (good)
-;; QUESTION SECTION:
-;www.edu.xunta.gal.		IN	A
-
-;; ANSWER SECTION:
-www.edu.xunta.gal.	16913	IN	A	85.91.64.65
-
-;; Query time: 11 msec
-;; SERVER: 127.0.0.1#53(localhost) (UDP)
-;; WHEN: Thu Oct 10 11:02:00 UTC 2024
-;; MSG SIZE  rcvd: 90
-```
+![DockerFile dns](/docs/img/salidas/ej1.png)
 
 ### 2. Configuración del reenviador
 
 #### Contenido del archivo `/etc/bind/named.conf.options`:
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+``` bash
+options {
+	directory "/var/cache/bind";
 
+	// If there is a firewall between you and nameservers you want
+	// to talk to, you may need to fix the firewall to allow multiple
+	// ports to talk.  See http://www.kb.cert.org/vuls/id/800113
+
+	// If your ISP provided one or more IP addresses for stable 
+	// nameservers, you probably want to use them as forwarders.  
+	// Uncomment the following block, and insert the addresses replacing 
+	// the all-0's placeholder.
+
+	forwarders {
+		8.8.8.8;
+	};
+	forward only;
+
+	//========================================================================
+	// If BIND logs error messages about the root key being expired,
+	// you will need to update your keys.  See https://www.isc.org/bind-keys
+	//========================================================================
+	dnssec-validation no;
+
+	listen-on-v6 { none; };
+};
 ```
-root@darthvader:/# dig @localhost www.mecd.gob.es
 
-; <<>> DiG 9.18.28-1~deb12u2-Debian <<>> @localhost www.mecd.gob.es
-; (2 servers found)
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 43563
-;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 1232
-; COOKIE: f8a717b832c64c76010000006707b484d99d49189d1aa4a4 (good)
-;; QUESTION SECTION:
-;www.mecd.gob.es.		IN	A
-
-;; ANSWER SECTION:
-www.mecd.gob.es.	21600	IN	A	212.128.114.116
-
-;; Query time: 15 msec
-;; SERVER: 127.0.0.1#53(localhost) (UDP)
-;; WHEN: Thu Oct 10 11:03:32 UTC 2024
-;; MSG SIZE  rcvd: 88
-```
+![DockerFile dns](/docs/img/salidas/ej2.png)
 
 ### 3. Creación de una zona primaria de resolución directa
 
 #### Contenido del archivo de zona:
-```
+``` bash
 $TTL 86400
 @   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
      2023101001 ; Serial
@@ -156,7 +160,7 @@ palpatine    IN  CNAME darthsidious.starwars.lan.
 ```
 
 #### Contenido del archivo `/etc/bind/named.conf.local`:
-```
+``` bash
 //
 // Do any local configuration here
 
@@ -164,6 +168,12 @@ zone "starwars.lan" {
     type master;                 
     file "/etc/bind/db.starwars.lan"; 
 };
+
+zone "20.168.192.in-addr.arpa" {
+    type master;
+    file "/etc/bind/db.192.168.20";  
+};
+
 
 //
 
@@ -175,27 +185,28 @@ zone "starwars.lan" {
 ### 4. Creación de una zona de resolución inversa
 
 #### Contenido del archivo de zona:
-```
+``` bash
 $TTL 86400
 @   IN  SOA darthvader.starwars.lan. admin.starwars.lan. (
-        2023101001 ; Serial
-        604800      ; Refresh
-        86400       ; Retry
-        2419200     ; Expire
-        604800 )    ; Minimum TTL
+                  1   ; Serial 
+             604800   ; Refresh
+              86400   ; Retry
+            2419200   ; Expire
+             120 )    ; Minimum TTL
 
 ; Servidores de nombres para la zona
+@   IN  NS  darthvader.starwars.lan.
 @   IN  NS  darthsidious.starwars.lan.
 
 ; Registros PTR
-10  IN  PTR darthvader.starwars.lan.
-101 IN  PTR skywalker.starwars.lan.
-111 IN  PTR skywalker.starwars.lan.
-22  IN  PTR luke.starwars.lan.
-11  IN  PTR darthsidious.starwars.lan.
-24  IN  PTR yoda.starwars.lan.
-25  IN  PTR yoda.starwars.lan.
-26  IN  PTR c3p0.starwars.lan.
+10   IN  PTR darthvader.starwars.lan.
+101  IN  PTR skywalker.starwars.lan.
+111  IN  PTR skywalker.starwars.lan.
+22   IN  PTR luke.starwars.lan.
+11   IN  PTR darthsidious.starwars.lan.
+24   IN  PTR yoda.starwars.lan.
+25   IN  PTR yoda.starwars.lan.
+26   IN  PTR c3p0.starwars.lan.
 ```
 
 #### Contenido del archivo `/etc/bind/named.conf.local`:
@@ -210,15 +221,15 @@ zone "starwars.lan" {
 
 zone "20.168.192.in-addr.arpa" {
     type master;
-    file "/etc/bind/db.192.168.20";
+    file "/etc/bind/db.192.168.20";  
 };
+
 
 //
 
 // Consider adding the 1918 zones here, if they are not used in your
 // organization
 //include "/etc/bind/zones.rfc1918";
-
 ```
 
 ### 5. Comprobación de la resolución de registros
@@ -227,33 +238,33 @@ zone "20.168.192.in-addr.arpa" {
 ```bash
      nslookup darthvader.starwars.lan localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/5.1.png)
 ```bash
      nslookup skywalker.starwars.lan localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/EJ2222.png)
 ```bash
      nslookup starwars.lan localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/5.3.png)
 ```bash
      nslookup -q=mx starwars.lan localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/5.6.png)
 ```bash
      nslookup -q=ns starwars.lan localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/5.5.png)
 ```bash
      nslookup -q=soa starwars.lan localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/soa.png)
 ```bash
      nslookup -q=txt lenda.starwars.lan localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/5.8.png)
 ```bash
      nslookup 192.168.20.11 localhost
 ```
-![DockerFile dns](/docs/img/contenidoFORWARDERSSSS.png)
+![DockerFile dns](/docs/img/salidas/last.png)
 
