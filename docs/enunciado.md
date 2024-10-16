@@ -27,7 +27,7 @@ Podes usar contedores con **Debian 12** e unha única interface de rede.
     dig @localhost www.edu.xunta.gal
     ```
 
-2. **Configurar un reenviador** ✅
+2. **Configurar un reenviador** 
   - Configura o servidor **BIND9** para que use como reenviador o **DNS 8.8.8.8**.
   - Pega no documento de entrega o contido do arquivo `/etc/bind/named.conf.options` e a saída do seguinte comando:
 
