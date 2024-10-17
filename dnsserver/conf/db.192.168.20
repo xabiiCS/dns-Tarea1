@@ -8,7 +8,7 @@ $TTL 86400
 
 ; Servidores de nombres para la zona
 @   IN  NS  darthvader.starwars.lan.
-@   IN  NS  darthsidious.starwars.lan.  
+@   IN  NS  darthsidious.starwars.lan.
 
 ; Registros PTR
 10  IN  PTR darthvader.starwars.lan.
