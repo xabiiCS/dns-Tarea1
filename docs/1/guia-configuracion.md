@@ -10,7 +10,7 @@ Neste documento detállanse os pasos necesarios para a configuración dun servid
 
 #### Comprobación con comando:
 
-![Acceso a Internet?](/docs/img-MD/pre1.png)
+![Acceso a Internet?](/docs/1/img-MD/pre1.png)
 
 ---
 
@@ -18,7 +18,7 @@ Neste documento detállanse os pasos necesarios para a configuración dun servid
 
 #### Comprobación con comando:
 
-![HOSTNAME](/docs/img-MD/pre2.png)
+![HOSTNAME](/docs/1/img-MD/pre2.png)
 
 </br>
 
@@ -26,7 +26,7 @@ Neste documento detállanse os pasos necesarios para a configuración dun servid
 
 #### Comprobación con comando:
 
-![Confirmar direccion IP](/docs/img-MD/pre3.png)
+![Confirmar direccion IP](/docs/1/img-MD/pre3.png)
 
 ---
 
@@ -49,7 +49,7 @@ ENTRYPOINT ["/entrypoint.sh"]
 ```
 
 
-![DNSUTILS](/docs/img-MD/pre4.png)
+![DNSUTILS](/docs/1/img-MD/pre4.png)
 
 ---
 
@@ -95,7 +95,7 @@ dig @localhost www.edu.xunta.gal
 ```
 
 #### Saída del comando:
-![Comando dig #1](/docs/img-MD/ej1.png)
+![Comando dig #1](/docs/1/img-MD/ej1.png)
 
 ---
 
@@ -131,7 +131,7 @@ options {
 };
 ```
 
-![Comando dig #2](/docs/img-MD/ej2.png)
+![Comando dig #2](/docs/1/img-MD/ej2.png)
 
 ---
 
@@ -259,7 +259,7 @@ zone "20.168.192.in-addr.arpa" {
 nslookup darthvader.starwars.lan localhost
 ```
 
-![DockerFile dns](/docs/img-MD/5.1.png)
+![DockerFile dns](/docs/1/img-MD/5.1.png)
 
 ---
 
@@ -267,7 +267,7 @@ nslookup darthvader.starwars.lan localhost
 nslookup skywalker.starwars.lan localhost
 ```
 
-![DockerFile dns](/docs/img-MD/EJ2222.png)
+![DockerFile dns](/docs/1/img-MD/EJ2222.png)
 
 ---
 
@@ -275,7 +275,7 @@ nslookup skywalker.starwars.lan localhost
      nslookup starwars.lan localhost
 ```
 
-![DockerFile dns](/docs/img-MD/5.3.png)
+![DockerFile dns](/docs/1/img-MD/5.3.png)
 
 ---
 
@@ -283,7 +283,7 @@ nslookup skywalker.starwars.lan localhost
      nslookup -q=mx starwars.lan localhost
 ```
 
-![DockerFile dns](/docs/img-MD/5.6.png)
+![DockerFile dns](/docs/1/img-MD/5.6.png)
 
 ---
 
@@ -291,7 +291,7 @@ nslookup skywalker.starwars.lan localhost
      nslookup -q=ns starwars.lan localhost
 ```
 
-![DockerFile dns](/docs/img-MD/5.5.png)
+![DockerFile dns](/docs/1/img-MD/5.5.png)
 
 ---
 
@@ -299,7 +299,7 @@ nslookup skywalker.starwars.lan localhost
      nslookup -q=soa starwars.lan localhost
 ```
 
-![DockerFile dns](/docs/img-MD/soa.png)
+![DockerFile dns](/docs/1/img-MD/soa.png)
 
 ---
 
@@ -307,7 +307,7 @@ nslookup skywalker.starwars.lan localhost
      nslookup -q=txt lenda.starwars.lan localhost
 ```
 
-![DockerFile dns](/docs/img-MD/5.8.png)
+![DockerFile dns](/docs/1/img-MD/5.8.png)
 
 ---
 
@@ -315,5 +315,5 @@ nslookup skywalker.starwars.lan localhost
      nslookup 192.168.20.11 localhost
 ```
 
-![DockerFile dns](/docs/img-MD/last.png)
+![DockerFile dns](/docs/1/img-MD/last.png)
 

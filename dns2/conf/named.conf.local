@@ -1,5 +1,15 @@
 //
 // Do any local configuration here
+
+key "chavedns2" {
+	algorithm hmac-sha256;
+	secret "HSDAbZ5hd4/qgSxYZFjDVQx6azqXYAiYq5YK6UwREg8=";
+};
+
+server 192.168.20.10 { 
+    keys { "chavedns2"; };
+};
+
 zone "starwars.lan" {
 	type slave;
     file "db.starwars.lan";
