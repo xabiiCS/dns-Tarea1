@@ -48,10 +48,4 @@
 - Captura de resolucion de zona en **darthsidious** coa entrada de **r2d2**.
 ![r2d2-ref-1](/docs/2/img2/capturas/llamada-r2d2-primaria.png)
 ![r2d2-ref-inv](/docs/2/img2/capturas/llamada-r2d2-inversa.png)
----
 
-## 5. Conclusións
-
-- Resumo dos pasos realizados.
-- Problemas atopados e solucións aplicadas.
-- Observacións adicionais.
